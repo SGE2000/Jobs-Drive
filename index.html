@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobDrive - Plataforma Segura de Empleo Internacional</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        :root {
+            --primary: #00a8ff;
+            --secondary: #2c3e50;
+            --accent: #ff6b6b;
+            --success: #1dd1a1;
+            --warning: #feca57;
+            --light: #f8f9fa;
+            --dark: #222f3e;
+            --gray: #8395a7;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --radius: 10px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            font-size: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        nav a.active {
+            color: var(--primary);
+        }
+        
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 3px;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(0, 168, 255, 0.1) 0%, rgba(44, 62, 80, 0.1) 100%);
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero h1 span {
+            color: var(--primary);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            color: var(--gray);
+        }
+        
+        .search-container {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: var(--shadow);
+        }
+        
+        .search-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .search-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .search-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .search-input {
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .search-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1rem;
+        }
+        
+        .search-btn:hover {
+            background-color: #0097e6;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            padding: 2.5rem 2rem;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(0, 168, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .feature-icon i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        
+        /* Job Listings */
+        .job-listings {
+            padding: 0 0 5rem;
+        }
+        
+        .listings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1.2rem;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .listings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .job-card {
+            background-color: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+        
+        .job-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .job-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .job-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .job-company {
+            color: var(--gray);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .job-location {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .job-price {
+            background-color: rgba(0, 168, 255, 0.1);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .job-body {
+            padding: 1.5rem;
+        }
+        
+        .job-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .job-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .job-tag {
+            background-color: #f1f2f6;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: var(--dark);
+        }
+        
+        .job-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background-color: #f8f9fa;
+            border-top: 1px solid #eee;
+        }
+        
+        .employer-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .employer-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .employer-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .stars {
+            color: var(--warning);
+        }
+        
+        .rating-value {
+            font-weight: 600;
+            margin-left: 0.3rem;
+        }
+        
+        .job-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0097e6;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(0, 168, 255, 0.1);
+        }
+        
+        /* Reviews Section */
+        .reviews-section {
+            padding: 5rem 0;
+            background-color: white;
+        }
+        
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .review-card {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .reviewer-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+        
+        .reviewer-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .review-type {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.3rem;
+        }
+        
+        .review-type.employee {
+            background-color: rgba(29, 209, 161, 0.1);
+            color: var(--success);
+        }
+        
+        .review-type.employer {
+            background-color: rgba(0, 168, 255, 0.1);
+            color: var(--primary);
+        }
+        
+        .review-body {
+            color: var(--dark);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+        
+        .review-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Safety Section */
+        .safety {
+            padding: 5rem 0;
+            background-color: #f8f9fa;
+        }
+        
+        .safety-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .safety-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .safety-icon {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(29, 209, 161, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .safety-icon i {
+            font-size: 2rem;
+            color: var(--success);
+        }
+        
+        /* Chat Interface */
+        .chat-container {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background-color: white;
+            border-radius: var(--radius) var(--radius) 0 0;
+            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            border-radius: var(--radius) var(--radius) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-body {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 0.8rem 1rem;
+            border-radius: 18px;
+            font-size: 0.95rem;
+        }
+        
+        .message.received {
+            background-color: #f1f2f6;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message.sent {
+            background-color: var(--primary);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .chat-footer {
+            padding: 1rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+        }
+        
+        .chat-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .close-chat {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 168, 255, 0.3);
+            z-index: 999;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-col a {
+            color: #b2bec3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b2bec3;
+            font-size: 0.9rem;
+        }
+        
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1100;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 600px;
+            margin: 3rem auto;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        /* Rating System */
+        .rating-input {
+            direction: rtl;
+            text-align: center;
+            margin: 1rem 0;
+        }
+        
+        .rating-input input {
+            display: none;
+        }
+        
+        .rating-input label {
+            font-size: 2rem;
+            color: #ddd;
+            cursor: pointer;
+            margin: 0 0.2rem;
+            transition: color 0.3s;
+        }
+        
+        .rating-input input:checked ~ label,
+        .rating-input label:hover,
+        .rating-input label:hover ~ label {
+            color: var(--warning);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .listings-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+                z-index: 100;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .listings-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .chat-container {
+                width: 100%;
+                right: 0;
+                height: 70vh;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .listings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+            }
+        }
+        
+        /* Badge for verified users */
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background-color: rgba(29, 209, 161, 0.1);
+            color: var(--success);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        
+        .verified-badge i {
+            font-size: 0.8rem;
+        }
+        
+        /* Trust score */
+        .trust-score {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background-color: rgba(0, 168, 255, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-handshake"></i>
+                <span>JobDrive</span>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="#home" class="active">Inicio</a></li>
+                    <li><a href="#jobs">Trabajos</a></li>
+                    <li><a href="#reviews">Reseñas</a></li>
+                    <li><a href="#safety">Seguridad</a></li>
+                    <li><a href="#how-it-works">Cómo funciona</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-menu">
+                <div class="trust-score">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>95%</span>
+                </div>
+                <div class="user-avatar" id="userAvatar">
+                    JS
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Encuentra empleo o talento <span>con total seguridad</span></h1>
+            <p>JobDrive conecta empleadores y trabajadores de forma segura, con perfiles verificados y sistema de reseñas bidireccional. ¡Negocia directamente como en InDrive!</p>
+            
+            <div class="search-container">
+                <div class="search-tabs">
+                    <div class="search-tab active" data-tab="jobs">Buscar Trabajos</div>
+                    <div class="search-tab" data-tab="candidates">Buscar Candidatos</div>
+                </div>
+                
+                <form class="search-form" id="searchForm">
+                    <input type="text" class="search-input" placeholder="¿Qué trabajo buscas?" id="searchQuery">
+                    <input type="text" class="search-input" placeholder="Ubicación (país o ciudad)" id="searchLocation">
+                    <select class="search-input" id="searchCategory">
+                        <option value="">Todas las categorías</option>
+                        <option value="tech">Tecnología</option>
+                        <option value="design">Diseño</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="finance">Finanzas</option>
+                        <option value="healthcare">Salud</option>
+                        <option value="education">Educación</option>
+                    </select>
+                    <button type="submit" class="search-btn">Buscar</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="features" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>¿Cómo funciona JobDrive?</h2>
+                <p>Una plataforma transparente y segura que protege tanto a empleadores como a trabajadores</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h3>Perfiles Verificados</h3>
+                    <p>Todos los usuarios deben verificar su identidad. Los trabajadores pasan por verificaciones de antecedentes legales.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments-dollar"></i>
+                    </div>
+                    <h3>Negociación Directa</h3>
+                    <p>Como en InDrive, puedes negociar salarios y condiciones directamente con la otra parte antes de aceptar.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <h3>Reseñas Bidireccionales</h3>
+                    <p>Tanto empleadores como empleados pueden dejar reseñas después de cada trabajo completado.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Sistema de Seguridad</h3>
+                    <p>Pagos seguros en garantía, resolución de conflictos y seguro de cumplimiento contractual.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Job Listings -->
+    <section class="job-listings" id="jobs">
+        <div class="container">
+            <div class="section-title">
+                <h2>Trabajos Disponibles</h2>
+                <p>Oportunidades de empleo internacional con empresas verificadas</p>
+            </div>
+            
+            <div class="listings-header">
+                <h3>125 trabajos disponibles</h3>
+                
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="remote">Remoto</button>
+                    <button class="filter-btn" data-filter="full-time">Tiempo completo</button>
+                    <button class="filter-btn" data-filter="part-time">Medio tiempo</button>
+                    <button class="filter-btn" data-filter="verified">Empresas verificadas</button>
+                </div>
+            </div>
+            
+            <div class="listings-grid" id="jobListings">
+                <!-- Jobs will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section" id="reviews">
+        <div class="container">
+            <div class="section-title">
+                <h2>Reseñas de la Comunidad</h2>
+                <p>Lo que dicen empleadores y trabajadores sobre sus experiencias en JobDrive</p>
+            </div>
+            
+            <div class="reviews-grid" id="reviewsGrid">
+                <!-- Reviews will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Safety Section -->
+    <section class="safety" id="safety">
+        <div class="container">
+            <div class="section-title">
+                <h2>Tu seguridad es nuestra prioridad</h2>
+                <p>Implementamos múltiples medidas para proteger a todos los usuarios de la plataforma</p>
+            </div>
+            
+            <div class="safety-grid">
+                <div class="safety-card">
+                    <div class="safety-icon">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <h3>Verificación de Identidad</h3>
+                    <p>Requerimos verificación de identidad para todos los usuarios mediante documentos oficiales.</p>
+                </div>
+                
+                <div class="safety-card">
+                    <div class="safety-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Verificación de Antecedentes</h3>
+                    <p>Los trabajadores son sometidos a verificaciones de antecedentes legales antes de ser aprobados.</p>
+                </div>
+                
+                <div class="safety-card">
+                    <div class="safety-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Pagos Seguros</h3>
+                    <p>Sistema de pagos en garantía que libera los fondos solo cuando el trabajo es completado satisfactoriamente.</p>
+                </div>
+                
+                <div class="safety-card">
+                    <div class="safety-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h3>Resolución de Conflictos</h3>
+                    <p>Equipo de mediación disponible las 24 horas para resolver disputas entre empleadores y trabajadores.</p>
+                </div>
+                
+                <div class="safety-card">
+                    <div class="safety-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>Historial Transparente</h3>
+                    <p>Todos los usuarios tienen un historial público de trabajos y reseñas que puedes ver antes de contratar.</p>
+                </div>
+                
+                <div class="safety-card">
+                    <div class="safety-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3>Soporte 24/7</h3>
+                    <p>Soporte técnico y de seguridad disponible en todo momento para asistirte con cualquier problema.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>JobDrive</h3>
+                    <p>Conectamos talento global con oportunidades laborales internacionales de manera segura y transparente.</p>
+                    <div style="margin-top: 1rem;">
+                        <span class="trust-score">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>95% de seguridad</span>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Para Trabajadores</h3>
+                    <ul>
+                        <li><a href="#">Buscar Trabajos</a></li>
+                        <li><a href="#">Crear Perfil</a></li>
+                        <li><a href="#">Verificaciones</a></li>
+                        <li><a href="#">Recursos</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Para Empresas</h3>
+                    <ul>
+                        <li><a href="#">Publicar Trabajo</a></li>
+                        <li><a href="#">Buscar Talentos</a></li>
+                        <li><a href="#">Verificar Empresa</a></li>
+                        <li><a href="#">Soporte Empresarial</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> soporte@jobdrive.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (800) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Oficina Global: Miami, USA</li>
+                        <li><i class="fas fa-globe"></i> Disponible en 15 países</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 JobDrive. Todos los derechos reservados. | <a href="#" style="color: #b2bec3;">Política de Privacidad</a> | <a href="#" style="color: #b2bec3;">Términos de Servicio</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chat Interface -->
+    <button class="chat-toggle" id="chatToggle">
+        <i class="fas fa-comments"></i>
+    </button>
+    
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <div>
+                <strong>Chat con María González</strong>
+                <div style="font-size: 0.8rem;">Contratación: Desarrollador Frontend</div>
+            </div>
+            <button class="close-chat" id="closeChat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="chat-body" id="chatBody">
+            <div class="message received">
+                ¡Hola! Estoy interesado en la posición de Desarrollador Frontend que publicaste.
+            </div>
+            <div class="message sent">
+                Hola, me alegra que te interese. ¿Tienes experiencia con React y TypeScript?
+            </div>
+            <div class="message received">
+                Sí, tengo 3 años de experiencia con React y 2 con TypeScript. También tengo experiencia con Next.js.
+            </div>
+            <div class="message sent">
+                ¡Excelente! ¿Podrías compartir tu portafolio o algunos proyectos recientes?
+            </div>
+        </div>
+        
+        <div class="chat-footer">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Escribe tu mensaje...">
+            <button class="chat-btn" id="sendMessage">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div class="modal" id="reviewModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeReviewModal">&times;</span>
+            <h2>Dejar una reseña</h2>
+            <form id="reviewForm">
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="reviewFor">Reseña para:</label>
+                    <input type="text" id="reviewFor" class="form-control" value="María González - Desarrollador Frontend" readonly style="background-color: #f5f7fa;">
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label>Calificación:</label>
+                    <div class="rating-input">
+                        <input type="radio" id="star5" name="rating" value="5">
+                        <label for="star5">★</label>
+                        <input type="radio" id="star4" name="rating" value="4">
+                        <label for="star4">★</label>
+                        <input type="radio" id="star3" name="rating" value="3">
+                        <label for="star3">★</label>
+                        <input type="radio" id="star2" name="rating" value="2">
+                        <label for="star2">★</label>
+                        <input type="radio" id="star1" name="rating" value="1">
+                        <label for="star1">★</label>
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="reviewTitle">Título de la reseña:</label>
+                    <input type="text" id="reviewTitle" class="form-control" placeholder="Ej: Excelente profesional, muy recomendado">
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="reviewText">Reseña detallada:</label>
+                    <textarea id="reviewText" class="form-control" rows="5" placeholder="Describe tu experiencia trabajando con esta persona..."></textarea>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label>Tipo de reseña:</label>
+                    <div>
+                        <input type="radio" id="reviewTypeEmployee" name="reviewType" value="employee" checked>
+                        <label for="reviewTypeEmployee">Para empleado</label>
+                        
+                        <input type="radio" id="reviewTypeEmployer" name="reviewType" value="employer" style="margin-left: 1rem;">
+                        <label for="reviewTypeEmployer">Para empleador</label>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary">Publicar Reseña</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Datos iniciales de ejemplo
+        const jobs = [
+            {
+                id: 1,
+                title: "Desarrollador Frontend React",
+                company: "TechGlobal Inc.",
+                location: "Remoto (Internacional)",
+                salary: "$3,500 - $4,500/mes",
+                description: "Buscamos un desarrollador Frontend con experiencia en React y TypeScript para unirse a nuestro equipo de desarrollo de productos internacionales.",
+                tags: ["React", "TypeScript", "CSS", "Remoto", "Tiempo completo"],
+                type: "full-time",
+                remote: true,
+                verified: true,
+                employer: {
+                    name: "Carlos Rodríguez",
+                    avatar: "CR",
+                    rating: 4.8,
+                    reviews: 42
+                }
+            },
+            {
+                id: 2,
+                title: "Diseñador UX/UI Senior",
+                company: "DesignPro Agency",
+                location: "Madrid, España",
+                salary: "€2,800 - €3,500/mes",
+                description: "Agencia de diseño busca diseñador senior con experiencia en productos digitales y herramientas como Figma y Adobe Creative Suite.",
+                tags: ["UX", "UI", "Figma", "Adobe", "Presencial"],
+                type: "full-time",
+                remote: false,
+                verified: true,
+                employer: {
+                    name: "Ana Martínez",
+                    avatar: "AM",
+                    rating: 4.9,
+                    reviews: 67
+                }
+            },
+            {
+                id: 3,
+                title: "Marketing Digital Freelance",
+                company: "StartupGrowth",
+                location: "Remoto (América Latina)",
+                salary: "$25 - $40/hora",
+                description: "Proyecto freelance de 3 meses para campaña de marketing en redes sociales y SEO. Posibilidad de extensión.",
+                tags: ["Marketing", "SEO", "Redes Sociales", "Freelance", "Remoto"],
+                type: "part-time",
+                remote: true,
+                verified: false,
+                employer: {
+                    name: "Luis Fernández",
+                    avatar: "LF",
+                    rating: 4.5,
+                    reviews: 18
+                }
+            },
+            {
+                id: 4,
+                title: "Analista de Datos",
+                company: "DataInsights Corp",
+                location: "Bogotá, Colombia",
+                salary: "$2,000 - $2,800/mes",
+                description: "Analista de datos con experiencia en SQL, Python y visualización de datos para unirse a nuestro equipo de analytics.",
+                tags: ["SQL", "Python", "Power BI", "Analytics", "Presencial"],
+                type: "full-time",
+                remote: false,
+                verified: true,
+                employer: {
+                    name: "María López",
+                    avatar: "ML",
+                    rating: 4.7,
+                    reviews: 31
+                }
+            },
+            {
+                id: 5,
+                title: "Traductor Inglés-Español",
+                company: "LanguageBridge",
+                location: "Remoto (Global)",
+                salary: "$20 - $30/hora",
+                description: "Traductor freelance para documentos técnicos y legales. Se requiere certificación y experiencia mínima de 2 años.",
+                tags: ["Traducción", "Inglés", "Español", "Freelance", "Remoto"],
+                type: "part-time",
+                remote: true,
+                verified: true,
+                employer: {
+                    name: "Global Translations",
+                    avatar: "GT",
+                    rating: 4.6,
+                    reviews: 89
+                }
+            },
+            {
+                id: 6,
+                title: "Gerente de Proyectos IT",
+                company: "InnovateTech Solutions",
+                location: "Ciudad de México, México",
+                salary: "$4,000 - $5,500/mes",
+                description: "Gerente de proyectos con experiencia en metodologías ágiles y liderazgo de equipos de desarrollo de software.",
+                tags: ["Gestión", "Ágil", "IT", "Scrum", "Presencial"],
+                type: "full-time",
+                remote: false,
+                verified: true,
+                employer: {
+                    name: "Roberto Sánchez",
+                    avatar: "RS",
+                    rating: 4.8,
+                    reviews: 56
+                }
+            }
+        ];
+
+        const reviews = [
+            {
+                id: 1,
+                name: "María González",
+                role: "Desarrollador Frontend",
+                type: "employee",
+                rating: 5,
+                title: "Excelente profesional",
+                text: "María hizo un trabajo excepcional en nuestro proyecto de React. Cumplió todos los plazos y su código es de alta calidad. Definitivamente la contrataría nuevamente.",
+                date: "15 Oct, 2023"
+            },
+            {
+                id: 2,
+                name: "TechGlobal Inc.",
+                role: "Empresa",
+                type: "employer",
+                rating: 4,
+                title: "Buen lugar para trabajar",
+                text: "Trabajé con ellos por 6 meses y fue una experiencia positiva. El equipo es colaborativo y las expectativas son claras. El pago siempre fue puntual.",
+                date: "28 Sep, 2023"
+            },
+            {
+                id: 3,
+                name: "Carlos Mendoza",
+                role: "Diseñador UX/UI",
+                type: "employee",
+                rating: 5,
+                title: "Muy recomendado",
+                text: "Carlos transformó por completo la experiencia de usuario de nuestra aplicación. Su atención al detalle y creatividad son impresionantes.",
+                date: "5 Nov, 2023"
+            },
+            {
+                id: 4,
+                name: "StartupGrowth",
+                role: "Empresa",
+                type: "employer",
+                rating: 3,
+                title: "Cumplió con lo acordado",
+                text: "El proyecto se completó dentro del plazo, aunque hubo algunos retrasos en la comunicación. El resultado final fue satisfactorio.",
+                date: "10 Oct, 2023"
+            },
+            {
+                id: 5,
+                name: "Ana Rodríguez",
+                role: "Marketing Digital",
+                type: "employee",
+                rating: 5,
+                title: "Increíble resultados",
+                text: "Ana superó todas nuestras expectativas con la campaña de marketing. Aumentamos nuestras conversiones en un 40%. ¡Excelente trabajo!",
+                date: "22 Sep, 2023"
+            },
+            {
+                id: 6,
+                name: "DataInsights Corp",
+                role: "Empresa",
+                type: "employer",
+                rating: 4,
+                title: "Profesional confiable",
+                text: "Trabajé en un proyecto de análisis de datos con ellos. Fueron muy profesionales y el trabajo fue de alta calidad. Los recomendaría.",
+                date: "18 Nov, 2023"
+            }
+        ];
+
+        // Estado de la aplicación
+        let currentUser = { name: "Juan Sánchez", avatar: "JS" };
+        let currentFilter = "all";
+        let chatVisible = false;
+
+        // Elementos del DOM
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        const chatToggle = document.getElementById('chatToggle');
+        const chatContainer = document.getElementById('chatContainer');
+        const closeChat = document.getElementById('closeChat');
+        const chatBody = document.getElementById('chatBody');
+        const chatInput = document.getElementById('chatInput');
+        const sendMessage = document.getElementById('sendMessage');
+        const searchTabs = document.querySelectorAll('.search-tab');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const jobListings = document.getElementById('jobListings');
+        const reviewsGrid = document.getElementById('reviewsGrid');
+        const reviewModal = document.getElementById('reviewModal');
+        const closeReviewModal = document.getElementById('closeReviewModal');
+        const reviewForm = document.getElementById('reviewForm');
+        const userAvatar = document.getElementById('userAvatar');
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar la aplicación
+            renderJobs(jobs);
+            renderReviews(reviews);
+            
+            // Mostrar/ocultar menú móvil
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('show');
+            });
+            
+            // Cerrar menú al hacer clic en un enlace
+            document.querySelectorAll('#navMenu a').forEach(link => {
+                link.addEventListener('click', function() {
+                    navMenu.classList.remove('show');
+                    
+                    // Actualizar navegación activa
+                    document.querySelectorAll('#navMenu a').forEach(a => a.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Toggle del chat
+            chatToggle.addEventListener('click', function() {
+                chatVisible = !chatVisible;
+                chatContainer.style.display = chatVisible ? 'flex' : 'none';
+            });
+            
+            // Cerrar chat
+            closeChat.addEventListener('click', function() {
+                chatVisible = false;
+                chatContainer.style.display = 'none';
+            });
+            
+            // Enviar mensaje en el chat
+            sendMessage.addEventListener('click', sendChatMessage);
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') sendChatMessage();
+            });
+            
+            // Cambiar pestañas de búsqueda
+            searchTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    searchTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const tabType = this.getAttribute('data-tab');
+                    updateSearchPlaceholder(tabType);
+                });
+            });
+            
+            // Filtrar trabajos
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    currentFilter = this.getAttribute('data-filter');
+                    filterJobs(currentFilter);
+                });
+            });
+            
+            // Cerrar modal de reseña
+            closeReviewModal.addEventListener('click', function() {
+                reviewModal.style.display = 'none';
+            });
+            
+            // Enviar reseña
+            reviewForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const rating = document.querySelector('input[name="rating"]:checked');
+                const title = document.getElementById('reviewTitle').value;
+                const text = document.getElementById('reviewText').value;
+                const reviewType = document.querySelector('input[name="reviewType"]:checked').value;
+                
+                if (!rating || !title || !text) {
+                    alert("Por favor completa todos los campos");
+                    return;
+                }
+                
+                // Crear nueva reseña
+                const newReview = {
+                    id: reviews.length + 1,
+                    name: currentUser.name,
+                    role: reviewType === 'employee' ? 'Empleado' : 'Empresa',
+                    type: reviewType,
+                    rating: parseInt(rating.value),
+                    title: title,
+                    text: text,
+                    date: new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })
+                };
+                
+                // Agregar a la lista
+                reviews.unshift(newReview);
+                renderReviews(reviews);
+                
+                // Cerrar modal y limpiar formulario
+                reviewModal.style.display = 'none';
+                reviewForm.reset();
+                
+                alert("¡Gracias por tu reseña! Ha sido publicada.");
+            });
+            
+            // Mostrar modal de reseña al hacer clic en el avatar del usuario
+            userAvatar.addEventListener('click', function() {
+                // En una app real, esto abriría el perfil del usuario
+                // Por ahora, abrimos el modal de reseña para demostración
+                reviewModal.style.display = 'block';
+            });
+            
+            // Cerrar modales al hacer clic fuera
+            window.addEventListener('click', function(e) {
+                if (e.target === reviewModal) {
+                    reviewModal.style.display = 'none';
+                }
+            });
+            
+            // Smooth scroll para enlaces internos
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    
+                    if (href !== "#") {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(href);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                });
+            });
+            
+            // Formulario de búsqueda
+            document.getElementById('searchForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const query = document.getElementById('searchQuery').value;
+                const location = document.getElementById('searchLocation').value;
+                const category = document.getElementById('searchCategory').value;
+                
+                if (!query && !location && !category) {
+                    alert("Por favor ingresa al menos un criterio de búsqueda");
+                    return;
+                }
+                
+                // Filtrar trabajos según búsqueda
+                const filteredJobs = jobs.filter(job => {
+                    const matchesQuery = !query || 
+                        job.title.toLowerCase().includes(query.toLowerCase()) || 
+                        job.company.toLowerCase().includes(query.toLowerCase()) ||
+                        job.description.toLowerCase().includes(query.toLowerCase());
+                    
+                    const matchesLocation = !location || 
+                        job.location.toLowerCase().includes(location.toLowerCase());
+                    
+                    const matchesCategory = !category || 
+                        job.tags.some(tag => tag.toLowerCase().includes(category.toLowerCase()));
+                    
+                    return matchesQuery && matchesLocation && matchesCategory;
+                });
+                
+                renderJobs(filteredJobs);
+                document.querySelector('.listings-header h3').textContent = `${filteredJobs.length} trabajos encontrados`;
+                
+                if (filteredJobs.length === 0) {
+                    jobListings.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                            <i class="fas fa-search" style="font-size: 3rem; color: #ddd; margin-bottom: 1rem;"></i>
+                            <h3>No se encontraron trabajos</h3>
+                            <p>Intenta con otros términos de búsqueda o filtros</p>
+                        </div>
+                    `;
+                }
+            });
+        });
+        
+        // Funciones de la aplicación
+        function updateSearchPlaceholder(type) {
+            const input = document.getElementById('searchQuery');
+            input.placeholder = type === 'jobs' ? 
+                '¿Qué trabajo buscas?' : 
+                '¿Qué habilidades o profesión buscas?';
+        }
+        
+        function renderJobs(jobsArray) {
+            jobListings.innerHTML = '';
+            
+            jobsArray.forEach(job => {
+                // Crear elementos de estrellas para rating
+                let stars = '';
+                const fullStars = Math.floor(job.employer.rating);
+                const hasHalfStar = job.employer.rating % 1 >= 0.5;
+                
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= fullStars) {
+                        stars += '<i class="fas fa-star"></i>';
+                    } else if (i === fullStars + 1 && hasHalfStar) {
+                        stars += '<i class="fas fa-star-half-alt"></i>';
+                    } else {
+                        stars += '<i class="far fa-star"></i>';
+                    }
+                }
+                
+                const jobCard = document.createElement('div');
+                jobCard.className = 'job-card';
+                jobCard.innerHTML = `
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">${job.title}</div>
+                            <div class="job-company">${job.company} 
+                                ${job.verified ? '<span class="verified-badge"><i class="fas fa-check-circle"></i>Verificada</span>' : ''}
+                            </div>
+                            <div class="job-location">
+                                <i class="fas fa-map-marker-alt"></i> ${job.location}
+                                ${job.remote ? ' <span class="verified-badge"><i class="fas fa-wifi"></i>Remoto</span>' : ''}
+                            </div>
+                        </div>
+                        <div class="job-price">${job.salary}</div>
+                    </div>
+                    <div class="job-body">
+                        <p class="job-description">${job.description}</p>
+                        <div class="job-tags">
+                            ${job.tags.map(tag => `<span class="job-tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="job-footer">
+                        <div class="employer-info">
+                            <div class="employer-avatar">${job.employer.avatar}</div>
+                            <div>
+                                <div><strong>${job.employer.name}</strong></div>
+                                <div class="employer-rating">
+                                    <div class="stars">${stars}</div>
+                                    <div class="rating-value">${job.employer.rating}</div>
+                                    <div style="color: var(--gray); margin-left: 0.5rem;">(${job.employer.reviews})</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-actions">
+                            <button class="btn btn-outline" onclick="showJobDetails(${job.id})">Ver detalles</button>
+                            <button class="btn btn-primary" onclick="applyToJob(${job.id})">Aplicar</button>
+                        </div>
+                    </div>
+                `;
+                
+                jobListings.appendChild(jobCard);
+            });
+        }
+        
+        function filterJobs(filter) {
+            let filteredJobs = jobs;
+            
+            switch(filter) {
+                case 'remote':
+                    filteredJobs = jobs.filter(job => job.remote);
+                    break;
+                case 'full-time':
+                    filteredJobs = jobs.filter(job => job.type === 'full-time');
+                    break;
+                case 'part-time':
+                    filteredJobs = jobs.filter(job => job.type === 'part-time');
+                    break;
+                case 'verified':
+                    filteredJobs = jobs.filter(job => job.verified);
+                    break;
+                default:
+                    filteredJobs = jobs;
+            }
+            
+            renderJobs(filteredJobs);
+            document.querySelector('.listings-header h3').textContent = `${filteredJobs.length} trabajos disponibles`;
+        }
+        
+        function renderReviews(reviewsArray) {
+            reviewsGrid.innerHTML = '';
+            
+            reviewsArray.forEach(review => {
+                // Crear elementos de estrellas para rating
+                let stars = '';
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= review.rating) {
+                        stars += '<i class="fas fa-star"></i>';
+                    } else {
+                        stars += '<i class="far fa-star"></i>';
+                    }
+                }
+                
+                const reviewCard = document.createElement('div');
+                reviewCard.className = 'review-card';
+                reviewCard.innerHTML = `
+                    <div class="review-header">
+                        <div class="reviewer-avatar">${review.name.charAt(0)}</div>
+                        <div class="reviewer-info">
+                            <h4>${review.name}</h4>
+                            <div>${review.role}</div>
+                            <div>
+                                <span class="review-type ${review.type}">
+                                    ${review.type === 'employee' ? 'Trabajador' : 'Empleador'}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-rating" style="margin-bottom: 1rem;">
+                        ${stars}
+                    </div>
+                    <h4 style="margin-bottom: 0.8rem;">${review.title}</h4>
+                    <p class="review-body">"${review.text}"</p>
+                    <div class="review-footer">
+                        <div>${review.date}</div>
+                        <div>
+                            <button class="btn btn-outline" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="reportReview(${review.id})">Reportar</button>
+                            <button class="btn btn-primary" style="padding: 0.3rem 0.8rem; font-size: 0.8rem; margin-left: 0.5rem;" onclick="likeReview(${review.id})">Útil</button>
+                        </div>
+                    </div>
+                `;
+                
+                reviewsGrid.appendChild(reviewCard);
+            });
+        }
+        
+        function sendChatMessage() {
+            const messageText = chatInput.value.trim();
+            if (!messageText) return;
+            
+            // Crear elemento de mensaje
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message sent';
+            messageDiv.textContent = messageText;
+            
+            // Agregar al cuerpo del chat
+            chatBody.appendChild(messageDiv);
+            
+            // Limpiar entrada
+            chatInput.value = '';
+            
+            // Auto-respuesta después de 1 segundo
+            setTimeout(() => {
+                const responses = [
+                    "Entiendo, ¿podrías contarme más sobre tu experiencia?",
+                    "Eso suena interesante. ¿Tienes disponibilidad para una entrevista la próxima semana?",
+                    "Perfecto, me gustaría ver algunos ejemplos de tu trabajo.",
+                    "¿Cuál sería tu expectativa salarial para este puesto?"
+                ];
+                
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                
+                const responseDiv = document.createElement('div');
+                responseDiv.className = 'message received';
+                responseDiv.textContent = randomResponse;
+                chatBody.appendChild(responseDiv);
+                
+                // Desplazar hacia abajo
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1000);
+            
+            // Desplazar hacia abajo
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+        
+        // Funciones globales para botones
+        window.showJobDetails = function(jobId) {
+            const job = jobs.find(j => j.id === jobId);
+            if (job) {
+                alert(`Detalles del trabajo:\n\n${job.title}\nEmpresa: ${job.company}\nUbicación: ${job.location}\nSalario: ${job.salary}\n\n${job.description}\n\nRequisitos:\n- ${job.tags.join('\n- ')}`);
+            }
+        };
+        
+        window.applyToJob = function(jobId) {
+            const job = jobs.find(j => j.id === jobId);
+            if (job) {
+                const response = confirm(`¿Estás seguro de que quieres aplicar al puesto "${job.title}" en ${job.company}?`);
+                if (response) {
+                    alert(`¡Has aplicado exitosamente a "${job.title}"! El empleador será notificado y podrás chatear con ellos en la plataforma.`);
+                    chatVisible = true;
+                    chatContainer.style.display = 'flex';
+                }
+            }
+        };
+        
+        window.reportReview = function(reviewId) {
+            const review = reviews.find(r => r.id === reviewId);
+            if (review) {
+                alert(`Has reportado la reseña de ${review.name}. Nuestro equipo revisará este contenido en las próximas 24 horas.`);
+            }
+        };
+        
+        window.likeReview = function(reviewId) {
+            alert("¡Gracias por tu feedback! Esto ayuda a mejorar la calidad de las reseñas en la plataforma.");
+        };
+    </script>
+</body>
+</html>
